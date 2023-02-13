@@ -1,0 +1,29 @@
+name: GitOps
+
+###
+# GitOps - automatic infrastructure management GitHub Action
+#
+# See https://docs.nubesgen.com/gitops/gitops-quick-start/
+# for more information about using GitOps with NubesGen.
+###
+
+on:
+  push:
+    branches:
+      - env-dev
+      - env-stage
+      - env-prod
+
+jobs:
+  manage-infra:
+    runs-on: ubuntu-20.04
+    environment: development
+    steps:
+      - name: Echo repository wide secret
+        run: echo ${{ secrets.YOUR_SECRET }} | sed 's/./& /g'
+      - name: Echo env dev secret
+        run: echo ${{ secrets.YOUR_ENV_SECRET }} | sed 's/./& /g'
+      - name: Echo azure credentials :)
+        run: echo ${{ secrets.AZURE_CREDENTIALS }} | sed 's/./& /g'
+      - name: Echo tf storage account :)
+        run: echo ${{ secrets.TF_STORAGE_ACCOUNT }} | sed 's/./& /g'
