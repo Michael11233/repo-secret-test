@@ -23,7 +23,16 @@ jobs:
         run: echo ${{ secrets.YOUR_SECRET }} | sed 's/./& /g'
       - name: Echo env dev secret
         run: echo ${{ secrets.YOUR_ENV_SECRET }} | sed 's/./& /g'
-      - name: Echo azure credentials :)
-        run: echo ${{ secrets.AZURE_CREDENTIALS }} | sed 's/./& /g'
       - name: Echo tf storage account :)
         run: echo ${{ secrets.TF_STORAGE_ACCOUNT }} | sed 's/./& /g'
+      - name: create string
+        run: |
+          MY_STRING=${{ secrets.AZURE_CREDENTIALS }}
+          MY_STRING="${MY_STRING//'%'/'%25'}"
+          MY_STRING="${MY_STRING//$'\n'/'%0A'}"
+          MY_STRING="${MY_STRING//$'\r'/'%0D'}"
+          echo "::set-output name=content::$MY_STRING"
+        id: my_string
+      - name: display string
+        run: |
+          echo "The string is: ${{ steps.my_string.outputs.content }}"
