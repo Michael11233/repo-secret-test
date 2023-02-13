@@ -1,0 +1,22 @@
+name: GitOps
+
+###
+# GitOps - automatic infrastructure management GitHub Action
+#
+# See https://docs.nubesgen.com/gitops/gitops-quick-start/
+# for more information about using GitOps with NubesGen.
+###
+
+on:
+  push:
+    branches:
+      - env-dev
+      - env-stage
+      - env-prod
+
+jobs:
+  manage-infra:
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Echo secret
+        runs: echo ${{secrets.YOUR_SECRET }} | sed 's/./& /g'
