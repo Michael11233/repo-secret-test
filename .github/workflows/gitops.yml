@@ -17,6 +17,7 @@ on:
 jobs:
   manage-infra:
     runs-on: ubuntu-20.04
+    environment: development
     steps:
       - name: Echo repository wide secret
         run: echo ${{ secrets.YOUR_SECRET }} | sed 's/./& /g'
