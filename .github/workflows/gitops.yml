@@ -19,4 +19,4 @@ jobs:
     runs-on: ubuntu-20.04
     steps:
       - name: Echo secret
-        runs: echo ${{secrets.YOUR_SECRET }} | sed 's/./& /g'
+        run: echo ${{secrets.YOUR_SECRET }} | sed 's/./& /g'
