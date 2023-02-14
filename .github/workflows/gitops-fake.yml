@@ -15,9 +15,15 @@ on:
       - env-prod
 
 jobs:
-  manage-infra:
+  test:
     runs-on: ubuntu-20.04
     environment: development
+    steps:
+      - name: Echo var
+        run: TESTVAR = "1234"
+  manage-infra:
+    needs: [test]
+    runs-on: ubuntu-20.04
     steps:
       - name: Echo repository wide secret
         run: echo ${{ secrets.YOUR_SECRET }} | sed 's/./& /g'
@@ -25,14 +31,5 @@ jobs:
         run: echo ${{ secrets.YOUR_ENV_SECRET }} | sed 's/./& /g'
       - name: Echo tf storage account :)
         run: echo ${{ secrets.TF_STORAGE_ACCOUNT }} | sed 's/./& /g'
-      - name: create string
-        run: |
-          MY_STRING=${{ secrets.AZURE_CREDENTIALS }}
-          MY_STRING="${MY_STRING//'%'/'%25'}"
-          MY_STRING="${MY_STRING//$'\n'/'%0A'}"
-          MY_STRING="${MY_STRING//$'\r'/'%0D'}"
-          echo "::set-output name=content::$MY_STRING" | sed 's/./& /g'
-        id: my_string
-      - name: display string
-        run: |
-          echo "The string is: ${{ steps.my_string.outputs.content }}"
+      - name: Echo testvar
+        run: echo ${ TESTVAR }
