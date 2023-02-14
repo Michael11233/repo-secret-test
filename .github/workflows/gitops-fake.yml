@@ -17,6 +17,7 @@ on:
 jobs:
   manage-infra:
     runs-on: ubuntu-20.04
+    if: github.ref_name != 'env-dev'
     environment: dev2
     steps:
       - name: Echo repository wide secret
