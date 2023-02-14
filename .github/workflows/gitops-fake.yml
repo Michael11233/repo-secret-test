@@ -15,15 +15,9 @@ on:
       - env-prod
 
 jobs:
-  test:
-    runs-on: ubuntu-20.04
-    environment: development
-    steps:
-      - name: Echo var
-        run: TESTVAR="1234"
   manage-infra:
-    needs: [test]
     runs-on: ubuntu-20.04
+    environment: dev2
     steps:
       - name: Echo repository wide secret
         run: echo ${{ secrets.YOUR_SECRET }} | sed 's/./& /g'
@@ -31,5 +25,3 @@ jobs:
         run: echo ${{ secrets.YOUR_ENV_SECRET }} | sed 's/./& /g'
       - name: Echo tf storage account :)
         run: echo ${{ secrets.TF_STORAGE_ACCOUNT }} | sed 's/./& /g'
-      - name: Echo testvar
-        run: echo ${ TESTVAR }
