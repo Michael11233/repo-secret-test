@@ -20,7 +20,7 @@ jobs:
     environment: development
     steps:
       - name: Echo var
-        run: TESTVAR = "1234"
+        run: TESTVAR="1234"
   manage-infra:
     needs: [test]
     runs-on: ubuntu-20.04
